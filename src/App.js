@@ -3,10 +3,12 @@
 import { useState } from 'react'
 import Header from "./components/Header";
 import Tasks from "./components/Tasks";
+import AddTask from "./components/AddTask";
 
 const App = () => {
     //State is immutable data and cannot be edited directly but
     //setTasks[...tasks, {Do what you need here}]
+    const [showAdd, setShowAdd] = useState(false)
     const [tasks, setTasks] = useState([
         {
             id: 1,
@@ -28,6 +30,14 @@ const App = () => {
         },
     ])
 
+    //Adding a task
+    const addTask = (task) => {
+        // console.log(task)
+        const id = Math.floor(Math.random() * 10000) +1
+        const newTask = {id, ...task}
+        setTasks([...tasks, newTask])
+    }
+
     //Delete Task
     const deleteTask = (id) => {
         // console.log('delete',id)
@@ -47,7 +57,8 @@ const App = () => {
 
     return (
         <div className="container">
-            <Header />
+            <Header onAdd={() => setShowAdd(!showAdd)} showAdd={showAdd}/>
+            {showAdd && (<AddTask onAdd={addTask}/>)}
             {tasks.length?
                 (<Tasks tasks={tasks} onDelete={deleteTask} onToggle={setReminder} />)
                 : ('No Tasks To Show')}
