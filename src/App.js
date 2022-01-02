@@ -21,9 +21,10 @@ const App = () => {
     //Fetch Tasks
     const fetchTasks = async () => {
         const response = await fetch('http://localhost:5000/tasks')
+        console.log(response)
         const data = await response.json()
 
-        // console.log(data)
+        console.log(data)
         return data
     }
 
@@ -38,6 +39,7 @@ const App = () => {
 
     //Adding a task
     const addTask = async (task) => {
+        console.log(task)
         const res = await fetch(`http://localhost:5000/tasks`,{
             method: 'POST',
             headers: {
@@ -87,6 +89,7 @@ const App = () => {
         <div className="container">
             <Header onAdd={() => setShowAdd(!showAdd)} showAdd={showAdd}/>
             {showAdd && (<AddTask onAdd={addTask}/>)}
+            {/*The above && operator is used as a ternary operator without an else block*/}
             {tasks.length?
                 (<Tasks tasks={tasks} onDelete={deleteTask} onToggle={setReminder} />)
                 : ('No Tasks To Show')}
